@@ -1,0 +1,33 @@
+name: Build and Publish Azure Image
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-image:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Packer
+      uses: hashicorp/setup-packer@v2
+      with:
+        version: '1.7.8'
+
+    - name: Azure Login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Run Packer Build
+      run: |
+        cd cloud_image_builder
+        packer init .
+        packer build ubuntu_docker.pkr.hcl
+
+    - name: Publish Managed Image to Azure
+      run: echo "Image creation successful"
