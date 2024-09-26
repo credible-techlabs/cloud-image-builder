@@ -1,0 +1,55 @@
+name: CI
+run-name: CI pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+env:
+  GH_TOKEN: ${{ secrets.GH_TOKEN }}
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    concurrency: release
+    permissions:
+      id-token: write
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+            fetch-depth: 0
+            ref: ${{ github.head_ref || github.ref_name }}
+            token: ${{ secrets.GH_TOKEN }}
+
+      - uses: actions/setup-python@v5
+        with:
+            python-version: '3.12'
+      - name: install poetry
+        shell: bash
+        run: pip install poetry
+
+      - name: Install all relevant packages
+        shell: bash
+        run: poetry install
+
+      - name: Set git user for semantic release
+        run: |
+          git config user.name arora-ashish-24
+          git config user.email arora.ashish.ai@gmail.com
+
+      - name: Python Semantic Release Version
+        run: poetry run semantic-release --verbose version
+        env:
+            GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+            GH_TOKEN: ${{ secrets.GH_TOKEN }}
+
+      - name: Python Semantic Release Publish
+        run: poetry run semantic-release --verbose publish
+        env:
+            GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+            GH_TOKEN: ${{ secrets.GH_TOKEN }}

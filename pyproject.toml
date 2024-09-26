@@ -1,0 +1,42 @@
+[tool.poetry]
+name = "cloud-image-builder"
+version = "0.1.0"
+description = ""
+authors = ["Ashish Arora <arora.ashish.ai@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+
+
+[tool.poetry.group.dev.dependencies]
+python-semantic-release = "^9.8.8"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.semantic_release]
+version_toml = ["pyproject.toml:tool.poetry.version"]
+build_command = "pip install poetry && poetry build"
+
+[tool.semantic_release.remote]
+name = "origin"
+type = "github"
+
+[tool.semantic_release.branches.main]
+match = "(main|master)"
+prerelease = false
+
+[tool.semantic_release.branches.feat]
+match = "(feat|fix|refactor)/.*"
+prerelease = true
+prerelease_token = "beta"
+
+[tool.semantic_release.commit_parser_options]
+patch_tags = ["fix", "chore", "style", "refactor"]
+allowed_tags = ["infra", "deploy", "feat", "fix", "chore", "style", "refactor", "docs", "test", "ci", "perf", "build"]
