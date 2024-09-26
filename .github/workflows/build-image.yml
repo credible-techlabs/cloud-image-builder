@@ -35,6 +35,17 @@ jobs:
         else
           echo "Resource group myResourceGroup already exists"
         fi
+        
+    - name: Run Packer Build
+      env:
+          azure_subscription_id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          azure_client_id: ${{ secrets.AZURE_CLIENT_ID }}
+          azure_client_secret: ${{ secrets.AZURE_CLIENT_SECRET }}
+          azure_tenant_id: ${{ secrets.AZURE_TENANT_ID }}
+      run: |
+        cd cloud_image_builder
+        packer init .
+        packer validate ubuntu_docker.pkr.hcl
 
     - name: Run Packer Build
       env:
