@@ -7,18 +7,38 @@ packer {
   }
 }
 
+variable "azure_client_id" {
+  type    = string
+  default = ""
+}
+
+variable "azure_client_secret" {
+  type    = string
+  default = ""
+}
+
+variable "azure_tenant_id" {
+  type    = string
+  default = ""
+}
+
+variable "azure_subscription_id" {
+  type    = string
+  default = ""
+}
+
 source "azure-arm" "ubuntu" {
   os_type            = "Linux"
   image_publisher    = "Canonical"
   image_offer        = "UbuntuServer"
   image_sku          = "18.04-LTS"
-  azure_location     = "eastus"
+  location     = "eastus"
   managed_image_name = "ubuntu-docker-nginx-image"
   managed_image_resource_group_name = "myResourceGroup"
-  subscription_id    = "${env.ARM_SUBSCRIPTION_ID}"
-  client_id          = "${env.ARM_CLIENT_ID}"
-  client_secret      = "${env.ARM_CLIENT_SECRET}"
-  tenant_id          = "${env.ARM_TENANT_ID}"
+  subscription_id    = var.azure_subscription_id
+  client_id          = var.azure_client_id
+  client_secret      = var.azure_client_secret
+  tenant_id          = var.azure_tenant_id
 }
 
 build {
