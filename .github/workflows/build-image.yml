@@ -28,6 +28,11 @@ jobs:
         creds: ${{ secrets.AZURE_CREDENTIAL }}
 
     - name: Run Packer Build
+      env:
+          AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+          AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
       run: |
         cd cloud_image_builder
         packer init .
