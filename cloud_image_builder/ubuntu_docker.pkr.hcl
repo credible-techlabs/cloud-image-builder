@@ -7,11 +7,6 @@ packer {
   }
 }
 
-variable "azure_subscription_id" {}
-variable "azure_client_id" {}
-variable "azure_client_secret" {}
-variable "azure_tenant_id" {}
-
 source "azure-arm" "ubuntu" {
   os_type            = "Linux"
   image_publisher    = "Canonical"
@@ -20,10 +15,10 @@ source "azure-arm" "ubuntu" {
   azure_location     = "eastus"
   managed_image_name = "ubuntu-docker-nginx-image"
   managed_image_resource_group_name = "myResourceGroup"
-  subscription_id    = "${env.AZURE_SUBSCRIPTION_ID}"
-  client_id          = "${env.AZURE_CLIENT_ID}"
-  client_secret      = "${env.AZURE_CLIENT_SECRET}"
-  tenant_id          = "${env.AZURE_TENANT_ID}"
+  subscription_id    = "${env.ARM_SUBSCRIPTION_ID}"
+  client_id          = "${env.ARM_CLIENT_ID}"
+  client_secret      = "${env.ARM_CLIENT_SECRET}"
+  tenant_id          = "${env.ARM_TENANT_ID}"
 }
 
 build {
