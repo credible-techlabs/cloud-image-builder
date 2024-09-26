@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "cloud-image-builder"
-version = "0.1.0"
+version = "0.2.0-beta.1"
 description = ""
 authors = ["Ashish Arora <arora.ashish.ai@gmail.com>"]
 readme = "README.md"
