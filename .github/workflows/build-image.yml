@@ -22,19 +22,19 @@ jobs:
       with:
         version: '1.7.8'
 
-    - name: Azure Login
-      uses: azure/login@v2
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIAL }}
+    # - name: Azure Login
+    #   uses: azure/login@v2
+    #   with:
+    #     creds: ${{ secrets.AZURE_CREDENTIAL }}
         
-    - name: Create Resource Group (if not exists)
-      id: create_rg
-      run: |
-        if ! az group show --name myResourceGroup &> /dev/null; then
-          az group create --name myResourceGroup --location eastus
-        else
-          echo "Resource group myResourceGroup already exists"
-        fi
+    # - name: Create Resource Group (if not exists)
+    #   id: create_rg
+    #   run: |
+    #     if ! az group show --name myResourceGroup &> /dev/null; then
+    #       az group create --name myResourceGroup --location eastus
+    #     else
+    #       echo "Resource group myResourceGroup already exists"
+    #     fi
         
     - name: Run Packer Build
       env:
