@@ -1,0 +1,7 @@
+# Terraform and Packer files
+*.tfstate
+*.tfstate.backup
+packer_cache/
+
+# Ansible roles
+roles/
